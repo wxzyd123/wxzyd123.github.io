@@ -435,7 +435,7 @@
   }
 
   setOperateItem()
-  const musics = JSON.parse(`[{"name":"稻香","artist":"周杰伦","url":"https://other-web-ra01-sycdn.kuwo.cn/1b17186b98be4dcafb120d98cc16441c/64a6547a/resource/n3/320/74/27/4113470514.mp3?from$unkown&plat$wapi","cover":"https://i.biliimg.com/bfs/im/9088dcef01fc3d18ca052b2bb3cc9c2c25a4a1a7.jpg@70w_70h_1c.webp"},{"name":"最后一页","artist":"江语晨","url":"https://api.liumingye.cn/m/api/link?id=d3f636iePH3nJMVUD1wO4TzDjfOQ2ur8yRYSjDsPYfkICiXo&quality=128&_t=1688623086687&token=20230327.41f66c049e7e6ecb6d7cf87876d02141","cover":"https://i.biliimg.com/bfs/im/5a910a2e23f2c8019f8fe5387c0a0e65db67206e.jpg@70w_70h_1c.webp"}]`)
+  const musics = JSON.parse(`[{"name":"稻香_test","artist":"周杰伦","url":"https://other-web-ra01-sycdn.kuwo.cn/1b17186b98be4dcafb120d98cc16441c/64a6547a/resource/n3/320/74/27/4113470514.mp3?from$unkown&plat$wapi","cover":"https://bkimg.cdn.bcebos.com/pic/2f738bd4b31c8701eb053c4b297f9e2f0608ffe8"},{"name":"最后一页","artist":"江语晨","url":"https://m804.music.126.net/20230706143102/8a8b34cb0afd7cf84b0846764e5b8691/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096481238/8744/da69/ad16/423f1db9c4e5f86e224807e08a737e68.mp3?_authSecret=0000018929cebfa40bc60aaba325ed9b","cover":"https://bkimg.cdn.bcebos.com/pic/c8ea15ce36d3d53960f3461e3287e950342ab025"},{"name":"八连杀","artist":"苏三","url":"music/八连杀.mp3","cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo0SWQx6YrNA8lElaG4OOKLkNkNzLO1PflKg&usqp=CAU"}]`)
   const ap = new APlayer({
     container: document.querySelector('#aplayer'),
     audio: musics,
