@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/normalize.css">
+
+	<title>SafeSpeech</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>SafeSpeech: </h2>
+      <h3>Robust and Universal Voice Protection Against Malicious Speech Synthesis</h3>
+      [<a href="https://github.com/wxzyd123/SafeSpeech">GitHub</a>]
+
+        <p class="fst-italic mb-0">
+      <p></p>
+        </p>
+        <p>Zhisheng Zhang, Derui Wang, Qianyi Yang, Pengyang Huang, Junhan Pu, Yuxin Cao, Kai Ye, Jie Hao, Yixian Yang</p>
+	</div>
+	<p><b>Abstract:</b> 
+	Speech synthesis technology has brought great convenience, while the widespread usage of realistic deepfake audio has triggered hazards. Malicious adversaries may unauthorizedly collect victims' speeches and clone a similar voice for illegal exploitation (<em>e.g.</em>, telecom fraud). However, the existing defense methods cannot effectively prevent deepfake exploitation and are vulnerable to robust training techniques. Therefore, a more effective and robust data protection method is urgently needed. In response, we propose a defensive framework, <b><em>SafeSpeech</em></b>, which protects the users' audio before uploading by embedding imperceptible perturbations on original speeches to prevent high-quality synthetic speech. In SafeSpeech, we devise a robust and universal proactive protection technique, <b>S</b>peech <b>PE</b>rturbative <b>C</b>oncealment (<b>SPEC</b>), that leverages a surrogate model to generate universally applicable perturbation for generative synthetic models. Moreover, we optimize the human perception of embedded perturbation in terms of time and frequency domains. To evaluate our method comprehensively, we conduct extensive experiments across advanced models and datasets, both subjectively and objectively. Our experimental results demonstrate that SafeSpeech achieves state-of-the-art (SOTA) voice protection effectiveness and transferability and is highly robust against advanced adaptive adversaries. Moreover, SafeSpeech has real-time capability in real-world tests.
+	The source code is available at <a href="https://github.com/wxzyd123/SafeSpeech">https://github.com/wxzyd123/SafeSpeech</a>.
+	</p>
+
+	<p>
+	<b>Contents</b>
+      <ul>
+        <li><a href="#safespeech-workflow">SafeSpeech Workflow</a></li>
+		<li><a href="#real-samples">Original and Protected Speech</a></li>
+        <li><a href="#fine-tuning">Synthesized Speech based on Fine-tuning</a></li>
+        <li><a href="#zero-shot">Synthesized Speech based on Zero-shot</a></li>
+      </ul>
+	</p>
+
+	
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">		
+	<h2 id="safespeech-workflow" style="text-align: center;">SafeSpeech Workflow</h2>
+	<body>
+	<p style="text-align: center;">
+		<img src="pics/workflow.png" height="400" width="800">
+	</p>
+	</body>
+		<p style="text-align: center;" >
+			<b>Figure 1.</b> The SafeSpeech safeguards voice by constructing a surrogate TTS model that minimizes the designed objectives (L_mel and L_noise with perception constraint L_perception detailed in Section 4). Despite attackers fine-tuning advanced TTS models from social platforms, they cannot produce high-quality synthetic speech to circumvent voiceprint locks or deceive victims' families.
+		</p>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="real-samples" style="text-align: center;">Original and Protected Speech</h2>
+	<div class="table-responsive pt-3">
+		<div class="text-center">
+			<p>These samples are undefended and protected samples from LibriTTS dataset of speaker 5339, respectively.</p>
+		</div>
+		<table class="table table-hover pt-2">
+			<thead>
+				<tr>
+					<th style="vertical-align: middle;text-align: center;"></th>
+					<th style="vertical-align: middle;text-align: center;">Method</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 1</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 2</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 3</th>
+				</tr>
+				<tbody>
+					<!-- <tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Text</td>
+						<td style="vertical-align: middle;text-align: center;"></td>
+						<td style="vertical-align: middle;text-align: center;">Goodbye, Philip.</td>
+						<td style="vertical-align: middle;text-align: center;">I can't come down again.</td>
+						<td style="vertical-align: middle;text-align: center;">Coulson sat still, penitent and ashamed. At length he stole a look at Hester.</td> -->
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Original</td>
+						<td style="vertical-align: middle;text-align: center;"></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_clean_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_clean_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_clean_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="8">Protected</td>
+						<td style="vertical-align: middle;text-align: center;">random noise</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_random-noise_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_random-noise_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_random-noise_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">AdvPoison</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AdvPoison_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AdvPoison_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AdvPoison_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">SEP</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_SEP_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_SEP_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_SEP_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">PTA</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_PTA_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_PTA_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_PTA_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">AttackVC</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AttackVC_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AttackVC_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AttackVC_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">AntiFake</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AntiFake_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AntiFake_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_AntiFake_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_PerSPEC_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_PerSPEC_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_PerSPEC_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">denoised</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_denoised_79.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_denoised_105.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/0_denoised_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+	</div>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="fine-tuning" style="text-align: center;">Synthesized Speech based on Fine-tuning</h2>
+	<div class="table-responsive pt-3">
+		<div class="text-center">
+			<p><b>BERT-VITS2</b></p>
+		</div>
+		<table class="table table-hover pt-2">
+			<thead>
+				<tr>
+					<th style="vertical-align: middle;text-align: center;">Method</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 1</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 2</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 3</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/clean_0_5339_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/clean_0_5339_19.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/clean_0_5339_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">random-noise</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/random-noise_0_5339_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/random-noise_0_5339_19.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/random-noise_0_5339_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">AdvPoison</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AdvPoison_0_5339_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AdvPoison_0_5339_19.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AdvPoison_0_5339_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">SEP</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/SEP_0_5339_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/SEP_0_5339_19.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/SEP_0_5339_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">PTA</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/PTA_0_5339_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/PTA_0_5339_19.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/PTA_0_5339_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">AntiFake</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AntiFake_0_5339_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AntiFake_0_5339_19.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AntiFake_0_5339_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">AttackVC</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AttackVC_0_5339_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AttackVC_0_5339_19.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/AttackVC_0_5339_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/SPEC_0_5339_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/SPEC_0_5339_19.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part1_BERT-VITS2/SPEC_0_5339_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					
+				</tbody>
+			</thead>
+		</table>
+
+		<div class="text-center">
+			<br>
+			<p><b>Other Models with Fine-tuning Capabilities</b></p>
+		</div>
+		<table class="table table-hover pt-2">
+			<thead>
+				<tr>
+					<th style="vertical-align: middle;text-align: center;">Models</th>
+					<th style="vertical-align: middle;text-align: center;">Method</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 1</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 2</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">StyleTTS 2</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/StyleTTS2_clean_0_5339_0.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/StyleTTS2_clean_0_5339_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/StyleTTS2_SPEC_0_5339_0.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/StyleTTS2_SPEC_0_5339_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">MB-iSTFT-VITS</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/MBV_clean_0_5339_0.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/MBV_clean_0_5339_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/MBV_SPEC_0_5339_0.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/MBV_SPEC_0_5339_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">VITS</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/VITS_clean_0_5339_0.mp4" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/VITS_clean_0_5339_1.mp4" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/VITS_SPEC_0_5339_0.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/VITS_SPEC_0_5339_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">GlowTTS</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/GlowTTS_clean_0_5339_0.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/GlowTTS_clean_0_5339_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/GlowTTS_SPEC_0_5339_0.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/2_deepfake_fine-tuning/part2_Other Models/GlowTTS_SPEC_0_5339_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+
+	</div>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="zero-shot" style="text-align: center;">Synthesized Speech based on Zero-shot</h2>
+	<div class="table-responsive pt-3">
+		<div class="text-center">
+			<p>These are synthesized speech from advanced zero-shot TTS models.</p>
+		</div>
+		<table class="table table-hover pt-2">
+			<thead>
+				<tr>
+					<th style="vertical-align: middle;text-align: center;">Models</th>
+					<th style="vertical-align: middle;text-align: center;">Method</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 1</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 2</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"></td>
+						<td style="vertical-align: middle;text-align: center;">Original</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/line1_original/original_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/line1_original/original_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">TorToise-TTS</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/TorToise-TTS_clean_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/TorToise-TTS_clean_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/TorToise-TTS_SPEC_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/TorToise-TTS_SPEC_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">XTTS</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/XTTS_clean_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/XTTS_clean_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/XTTS_SPEC_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/XTTS_SPEC_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">OpenVoice</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/OpenVoice_clean_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/OpenVoice_clean_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/OpenVoice_SPEC_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/OpenVoice_SPEC_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">FishSpeech</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/FishSpeech_clean_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/FishSpeech_clean_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/FishSpeech_SPEC_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/FishSpeech_SPEC_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">F5-TTS</td>
+						<td style="vertical-align: middle;text-align: center;">clean</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/F5-TTS_clean_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/F5-TTS_clean_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>			
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;"><b>SafeSpeech</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/F5-TTS_SPEC_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/3_deepfake_zero-shot/linex_synthesized/F5-TTS_SPEC_6.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+
+	</div>
+</div>
+
+
+
+
+</article>
+</main>
+</div>
+
+</body>
+</html>
