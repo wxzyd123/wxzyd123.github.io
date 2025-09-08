@@ -37,7 +37,7 @@
 		Speech synthesis based on large language models (LLMs) has facilitated our lives, such as voice assistants. 
 		However, malicious deepfake speech also introduces security threats, e.g., telecom fraud. 
 		Existing defense mainly focuses on protecting at the timbre level, making the synthesized audio dissimilar while still preserving its usability.
-		In this paper, we focus on the latest LLM-based speech synthesis techniques and propose a speech protection framework named ST-Guard. 
+		In this paper, we focus on the advanced LLM-based speech synthesis techniques and propose a speech protection framework named ST-Guard. 
 		We explore the vulnerability of the speech tokenizer and propose a proactive defense that can effectively prevent models from generating semantically meaningful speech. 
 		For the timbre protection, we employ the speaker encoder ensemble technique to enhance effectiveness and cross-model transferability.
 		Furthermore, we optimize perturbative perception based on the psychoacoustic model for better imperceptibility.
@@ -52,6 +52,7 @@
 		<li><a href="#real-samples">Original and Protected Speech</a></li>
         <li><a href="#zero-shot">Synthesized Speech on LibriTTS</a></li>
 		<li><a href="#multi">Multi-Speaker and Multilingual Evaluation</a></li>
+		<li><a href="#llm">Audio Foundation Model</a></li>
       </ul>
 	</p>
 
@@ -321,6 +322,38 @@
 		</table>
 
 	</div>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="llm" style="text-align: center;">Audio Foundation Model</h2>
+		<div class="table-responsive pt-3">
+		<div class="text-center">
+			<p><b>We test the ASR performance on Qwen2-Audio-7B-Instruct with one ST-Guard-protected speech.</b></p>
+		</div>
+		<table class="table table-hover pt-2">
+			<thead>
+				<tr>
+					<th style="vertical-align: middle;text-align: center;"></th>
+					<th style="vertical-align: middle;text-align: center;"></th>
+				</tr>
+				<tbody>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">Audio</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/1_real_samples/common_voice_en_19540120.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">Original Text</td>
+						<td style="vertical-align: middle;text-align: center;">Activation typically spreads to all the other units connected to it.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align: middle;text-align: center;">Model Output</td>
+						<td style="vertical-align: middle;text-align: center;">a man is speaking with a neutral mood.</td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
 </div>
 
 
