@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/normalize.css">
+
+	<title>UniSRCodec</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>UniSRCodec: </h2>
+      <h3>Unified and Low-Bitrate Single Codebook Codec with Sub-Band Reconstruction</h3>
+        <p class="fst-italic mb-0">
+      <p></p>
+        </p>
+        <p>Zhisheng Zhang, Xiang Li, Yixuan Zhou, Jing Peng, Shengbo Cai, Guoyang Zeng, Zhiyong Wu</p>
+	</div>
+	<p><b>Abstract:</b> 
+		Neural Audio Codecs (NACs) can reduce transmission overhead by performing compact compression and reconstruction, which also aim to bridge the gap between continuous and discrete signals.
+		Existing NACs can be divided into two categories: multi-codebook and single-codebook codecs. Multi-codebook codecs face challenges such as structural complexity and difficulty in adapting to downstream tasks, while single-codebook codecs, though structurally simpler, suffer from low-fidelity, ineffective modeling of unified audio, and an inability to support modeling of high-frequency audio. 
+		We propose the UniSRCodec, a single-codebook codec capable of supporting high sampling rate, low-bandwidth, high fidelity, and unified. We analyze the inefficiency of waveform-based compression and introduce the time and frequency compression method using the Mel-spectrogram, and cooperate with a Vocoder to recover the phase information of the original audio. Moreover, we propose a sub-band reconstruction technique to achieve high-quality compression across both low and high frequency bands. Subjective and objective experimental results demonstrate that UniSRCodec achieves state-of-the-art (SOTA) performance among cross-domain single-codebook codecs with only a token rate of 40, and its reconstruction quality is comparable to that of certain multi-codebook methods. 
+	</p>
+
+	<p>
+	<b>Contents</b>
+      <ul>
+        <li><a href="#workflow">UniSRCodec Workflow</a></li>
+		<li><a href="#speech">Speech</a></li>
+		<li><a href="#music">Music</a></li>
+		<li><a href="#audio">General Audio</a></li>
+      </ul>
+	</p>
+
+	
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">		
+	<h2 id="workflow" style="text-align: center;">UniSRCodec Workflow</h2>
+	<body>
+	<p style="text-align: center;">
+		<img src="pics/workflow.png" height="400" width="800">
+	</p>
+	</body>
+		<p style="text-align: center;" >
+			<b>Figure 1.</b> The architecture and training procedure of the UniSRCodec.
+		</p>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="speech" style="text-align: center;">Speech</h2>
+	<div class="table-responsive pt-3">
+		<div class="text-center">
+			<p>These samples are original and reconstructed samples from LibriTTS test-clean.</p>
+		</div>
+		<table class="table table-hover pt-2">
+			<thead>
+				<tr>
+					<!-- <th style="vertical-align: middle;text-align: center;"></th> -->
+					<th style="vertical-align: middle;text-align: center;">Model</th>
+					<th style="vertical-align: middle;text-align: center;">Token Rate</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 1</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 2</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 3</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Ground Truth</td>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">-</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/GT_260_123440_000010_000004.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/GT_237_134500_000036_000002.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/GT_6829_68769_000045_000001.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">MelCap</td>
+						<td style="vertical-align : middle;text-align:center;">260</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/MelCap_260_123440_000010_000004.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/MelCap_237_134500_000036_000002.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/MelCap_6829_68769_000045_000001.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">WavTokenizer</td>
+						<td style="vertical-align : middle;text-align:center;">40</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/WavTokenizer_260_123440_000010_000004.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/WavTokenizer_237_134500_000036_000002.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/WavTokenizer_6829_68769_000045_000001.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;">UniCodec</td>
+						<td style="vertical-align : middle;text-align: center;">75</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniCodec_260_123440_000010_000004.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniCodec_237_134500_000036_000002.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniCodec_6829_68769_000045_000001.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;"><b>UniSRCodec-B</b></td>
+						<td style="vertical-align : middle;text-align: center;">40</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniSRCodec-B_260_123440_000010_000004.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniSRCodec-B_237_134500_000036_000002.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniSRCodec-B_6829_68769_000045_000001.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;"><b>UniSRCodec-L</b></td>
+						<td style="vertical-align : middle;text-align: center;">176</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniSRCodec-L_260_123440_000010_000004.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniSRCodec-L_237_134500_000036_000002.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/speech/UniSRCodec-L_6829_68769_000045_000001.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+	</div>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="music" style="text-align: center;">Music</h2>
+	<div class="table-responsive pt-3">
+		<div class="text-center">
+			<p>These samples are original and reconstructed samples from MUSDB.</p>
+		</div>
+		<table class="table table-hover pt-2">
+			<thead>
+				<tr>
+					<!-- <th style="vertical-align: middle;text-align: center;"></th> -->
+					<th style="vertical-align: middle;text-align: center;">Model</th>
+					<th style="vertical-align: middle;text-align: center;">Token Rate</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 1</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 2</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 3</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Ground Truth</td>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">-</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/GT_The Sunshine Garcia Band - For I Am The Moon_30.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/GT_The Sunshine Garcia Band - For I Am The Moon_34.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/GT_Moosmusic - Big Dummy Shake_28.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;">MelCap</td>
+						<td style="vertical-align : middle;text-align: center;">260</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/MelCap_The Sunshine Garcia Band - For I Am The Moon_30.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/MelCap_The Sunshine Garcia Band - For I Am The Moon_34.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/MelCap_Moosmusic - Big Dummy Shake_28.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;">WavTokenizer</td>
+						<td style="vertical-align : middle;text-align: center;">40</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/WavTokenizer_The Sunshine Garcia Band - For I Am The Moon_30.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/WavTokenizer_The Sunshine Garcia Band - For I Am The Moon_34.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/WavTokenizer_Moosmusic - Big Dummy Shake_28.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;">UniCodec</td>
+						<td style="vertical-align : middle;text-align: center;">75</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniCodec_The Sunshine Garcia Band - For I Am The Moon_30.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniCodec_The Sunshine Garcia Band - For I Am The Moon_34.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniCodec_Moosmusic - Big Dummy Shake_28.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;"><b>UniSRCodec-B</b></td>
+						<td style="vertical-align : middle;text-align: center;">40</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniSRCodec-B_The Sunshine Garcia Band - For I Am The Moon_30.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniSRCodec-B_The Sunshine Garcia Band - For I Am The Moon_34.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniSRCodec-B_Moosmusic - Big Dummy Shake_28.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;"><b>UniSRCodec-L</b></td>
+						<td style="vertical-align : middle;text-align: center;">176</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniSRCodec-L_The Sunshine Garcia Band - For I Am The Moon_30.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniSRCodec-L_The Sunshine Garcia Band - For I Am The Moon_34.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/music/UniSRCodec-L_Moosmusic - Big Dummy Shake_28.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+	</div>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="audio" style="text-align: center;">General Audio</h2>
+	<div class="table-responsive pt-3">
+		<div class="text-center">
+			<p>These samples are original and reconstructed samples from AudioSet.</p>
+		</div>
+		<table class="table table-hover pt-2">
+			<thead>
+				<tr>
+					<!-- <th style="vertical-align: middle;text-align: center;"></th> -->
+					<th style="vertical-align: middle;text-align: center;">Model</th>
+					<th style="vertical-align: middle;text-align: center;">Token Rate</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 1</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 2</th>
+					<th style="vertical-align: middle;text-align: center;">Sample 3</th>
+				</tr>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Ground Truth</td>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">-</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/GT_0OYlHvyfNk4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/GT__3kxB2-MfWI.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/GT_CJr8XzTyIr4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;">MelCap</td>
+						<td style="vertical-align : middle;text-align: center;">260</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/MelCap_0OYlHvyfNk4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/MelCap__3kxB2-MfWI.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/MelCap_CJr8XzTyIr4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;">WavTokenizer</td>
+						<td style="vertical-align : middle;text-align: center;">40</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/WavTokenizer_0OYlHvyfNk4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/WavTokenizer__3kxB2-MfWI.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/WavTokenizer_CJr8XzTyIr4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;">UniCodec</td>
+						<td style="vertical-align : middle;text-align: center;">75</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniCodec_0OYlHvyfNk4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniCodec__3kxB2-MfWI.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniCodec_CJr8XzTyIr4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;"><b>UniSRCodec-B</b></td>
+						<td style="vertical-align : middle;text-align: center;">40</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniSRCodec-B_0OYlHvyfNk4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniSRCodec-B__3kxB2-MfWI.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniSRCodec-B_CJr8XzTyIr4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align: center;"><b>UniSRCodec-L</b></td>
+						<td style="vertical-align : middle;text-align: center;">176</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniSRCodec-L_0OYlHvyfNk4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniSRCodec-L__3kxB2-MfWI.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 300px;"><source src="audios/audio/UniSRCodec-L_CJr8XzTyIr4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</thead>
+		</table>
+	</div>
+</div>
+
+
+</article>
+</main>
+</div>
+
+</body>
+</html>
